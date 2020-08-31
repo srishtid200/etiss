@@ -60,6 +60,16 @@ script:
   - cd build
   - cmake -DRISCV_ELF_GCC_PREFIX=${Dep_dir}/toolchain/${RISC_V64} -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf ..
   - make 
+  - cd ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test
+  - mkdir build
+  - cd build
+  - cmake -DTEST_RV32UM=ON -DRISCV_ELF_GCC_PREFIX=${Dep_dir}/toolchain/${RISC_V64} -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf ..
+  - make
+  - cd ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test
+  - mkdir build2
+  - cd build2
+  - cmake -DTEST_RV32UI=ON -DRISCV_ELF_GCC_PREFIX=${Dep_dir}/toolchain/${RISC_V64} -DRISCV_ELF_GCC_BASENAME=riscv64-unknown-elf ..
+  - make
   - cd ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/bare_etiss_processor
   - mkdir build && cd build
   - cmake ..
@@ -70,6 +80,8 @@ script:
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv_cpp/build/riscv_example
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv/build/riscv_example gcc  
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv_cpp/build/riscv_example gcc
+  - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build/riscv_example | grep DONE
+  - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build2/riscv_example | grep DONE
    
  
 # Generate and deploy documentation

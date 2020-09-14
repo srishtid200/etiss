@@ -1,4 +1,4 @@
-#define RVTEST_RV32U
+#define RVTEST_RV32UF
 #define TESTNUM x28
 
 #define RVTEST_CODE_BEGIN		\
@@ -54,4 +54,3 @@ TEST_FUNC_NAME:				\
 #define RVTEST_CODE_END
 #define RVTEST_DATA_BEGIN .balign 4;
 #define RVTEST_DATA_END
-

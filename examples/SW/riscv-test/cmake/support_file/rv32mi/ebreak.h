@@ -1,4 +1,4 @@
-#define RVTEST_RV32U
+#define RVTEST_RV32M
 #define TESTNUM x28
 
 #define RVTEST_CODE_BEGIN		\
@@ -22,36 +22,21 @@ TEST_FUNC_NAME:				\
 .prname_done:				\
 	addi	a1,zero,' ';		\
 	sb	a1,0(a2);		\
-	sb	a1,0(a2);
-
-#define RVTEST_PASS			\
-	lui a0, 0x80000000 >> 12; \
-    addi a1, zero, 'P';       \
-    addi a2, zero, 'A';       \
-    addi a3, zero, 'S';       \
-    addi a4, zero, '\n';      \
+	sb	a1,0(a2);       \
+    jal	zero,.output;	\
+.output:                      \
+    lui a0, 0x80000000 >> 12; \
+    addi a1, zero, 'D';       \
+    addi a2, zero, 'O';       \
+    addi a3, zero, 'N';       \
+    addi a4, zero, 'E';       \
+    addi a5, zero, '\n';      \
     sb a1, 0(a0);             \
     sb a2, 0(a0);             \
     sb a3, 0(a0);             \
-    sb a3, 0(a0);             \
     sb a4, 0(a0);             \
-    jal zero, TEST_FUNC_RET;
-
-#define RVTEST_FAIL			\
-	lui a0, 0x80000000 >> 12; \
-    addi a1, zero, 'E';       \
-    addi a2, zero, 'R';       \
-    addi a3, zero, 'O';       \
-    addi a4, zero, '\n';      \
-    sb a1, 0(a0);             \
-    sb a2, 0(a0);             \
-    sb a2, 0(a0);             \
-    sb a3, 0(a0);             \
-    sb a2, 0(a0);             \
-    sb a4, 0(a0);             \
+    sb a5, 0(a0);             \
     ebreak;
-
 #define RVTEST_CODE_END
 #define RVTEST_DATA_BEGIN .balign 4;
 #define RVTEST_DATA_END
-

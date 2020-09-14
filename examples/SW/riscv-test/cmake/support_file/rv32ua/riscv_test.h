@@ -49,7 +49,7 @@ TEST_FUNC_NAME:				\
     sb a3, 0(a0);             \
     sb a2, 0(a0);             \
     sb a4, 0(a0);             \
-    jal zero, TEST_FUNC_RET;
+    ebreak;
 
 #define RVTEST_CODE_END
 #define RVTEST_DATA_BEGIN .balign 4;

@@ -81,7 +81,7 @@ script:
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv/build/riscv_example gcc  
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv_cpp/build/riscv_example gcc
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build/riscv_example gcc
-   -./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build2/riscv_example gcc
+  - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build2/riscv_example gcc
   - ./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build/riscv_example gcc | grep DONE
   - #./run_helper.sh ${TRAVIS_BUILD_DIR}/build_dir/installed/examples/SW/riscv-test/build2/riscv_example gcc | grep DONE
    

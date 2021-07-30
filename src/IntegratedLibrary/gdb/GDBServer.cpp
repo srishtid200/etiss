@@ -874,23 +874,15 @@ Server *Server::createTCPServer(std::map<std::string, std::string> options)
 }
 Server *Server::createTCPServer(int port)
 {
-
-#if ETISS_USE_POSIX_SOCKET
     etiss::log(etiss::VERBOSE,
                std::string("etiss::plugin::gdb::Server: starting tcp server on port ") + etiss::toString(port));
 
     std::shared_ptr<Connection> cs(new etiss::plugin::gdb::UnixTCPGDBConnection(port));
 
     Server *s = new Server(cs.get()->getPacketProtocol());
-
     s->cinst_ = cs;
 
     return s;
-#else
-
-    return 0;
-
-#endif
 }
 
 extern "C"

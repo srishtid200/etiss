@@ -58,6 +58,12 @@
 #include "etiss/config.h"
 
 #if ETISS_USE_POSIX_SOCKET
+#define SOCKTYPE int
+#else
+#include "winsock2.h"
+#define SOCKTYPE SOCKET
+#undef NOERROR
+#endif
 
 #include "etiss/IntegratedLibrary/gdb/GDBConnection.h"
 #include "etiss/jit/types.h"
@@ -85,9 +91,14 @@ class UnixTCPGDBConnection : public Connection
     virtual bool snd(std::string answer);
 
   private:
+#if ETISS_USE_POSIX_SOCKET
     int socket_;
-    bool valid_;
     int active_;
+#else
+    SOCKTYPE socket_;
+    SOCKTYPE active_;
+#endif
+    bool valid_;
     bool active_valid_;
     etiss::uint8 buffer_[1024];
     unsigned buffer_pos_;
@@ -98,7 +109,5 @@ class UnixTCPGDBConnection : public Connection
 } // namespace plugin
 
 } // namespace etiss
-
-#endif // ETISS_USE_POSIX_SOCKET
 
 #endif

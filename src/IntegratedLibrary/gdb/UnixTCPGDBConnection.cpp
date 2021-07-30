@@ -52,17 +52,21 @@
 
 #include "etiss/IntegratedLibrary/gdb/UnixTCPGDBConnection.h"
 
-#if ETISS_USE_POSIX_SOCKET
-
 #include <iostream>
 
 #include <errno.h>
+#if ETISS_USE_POSIX_SOCKET
 #include <netinet/in.h>
 #include <netinet/tcp.h>
-#include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
+#define CLOSESOCK close
+#else
+#include <winsock2.h>
+#define CLOSESOCK closesocket
+#endif
+#include <string.h>
+#include <sys/types.h>
 
 #ifndef SOCK_NONBLOCK
 #include <fcntl.h>
@@ -75,7 +79,19 @@ UnixTCPGDBConnection::UnixTCPGDBConnection(unsigned port)
 {
     valid_ = true;
     buffer_pos_ = 0;
+#if ETISS_USE_POSIX_SOCKET
     socket_ = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+#else
+    WSADATA wsaData;
+    int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (iResult != 0)
+    {
+        std::cout << "ERROR: WSAStartup failed: " << iResult << std::endl;
+    }
+    socket_ = socket(AF_INET, SOCK_STREAM, 0);
+    //u_long mode = 1;
+    //ioctlsocket(socket_, FIONBIO, &mode);
+#endif
     active_valid_ = false;
     // check socket
     if (socket_ < 0)
@@ -113,9 +129,9 @@ UnixTCPGDBConnection::UnixTCPGDBConnection(unsigned port)
 UnixTCPGDBConnection::~UnixTCPGDBConnection()
 {
     if (valid_)
-        close(socket_);
+        CLOSESOCK(socket_);
     if (active_valid_)
-        close(active_);
+        CLOSESOCK(active_);
 }
 bool UnixTCPGDBConnection::available()
 {
@@ -130,7 +146,7 @@ bool UnixTCPGDBConnection::_available(bool block)
     // accept new socket
     if (!active_valid_ && valid_)
     {
-        int cur = accept(socket_, 0, 0);
+        SOCKTYPE cur = accept(socket_, 0, 0);
         if (cur >= 0)
         {
             active_ = cur;
@@ -138,19 +154,36 @@ bool UnixTCPGDBConnection::_available(bool block)
             // configure socket
             int flag = 1;
             setsockopt(cur, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(int));
+#if !ETISS_USE_POSIX_SOCKET
+            if (!block)
+            {
+                u_long mode = 1;
+                ioctlsocket(active_, FIONBIO, &mode);
+            }
+#endif
         }
     }
     if (active_valid_)
     {
         if (valid_)
         {
-            int deny = accept(socket_, 0, 0);
+            SOCKTYPE deny = accept(socket_, 0, 0);
             if (deny >= 0)
             {
-                close(deny);
+                CLOSESOCK(deny);
             }
         }
-        ssize_t len = recv(active_, (void *)(buffer_ + buffer_pos_), 1024 - buffer_pos_, block ? 0 : MSG_DONTWAIT);
+        int flags = 0;
+#if ETISS_USE_POSIX_SOCKET
+        if (!block)
+        {
+            flags |= MSG_DONTWAIT;
+        }
+#else
+        u_long mode = block ? 0 : 1;
+        ioctlsocket(active_, FIONBIO, &mode);
+#endif
+        size_t len = recv(active_, (char *)(buffer_ + buffer_pos_), 1024 - buffer_pos_, flags);
         if (len > 0)
         {
             for (unsigned i = buffer_pos_; i < (unsigned)(buffer_pos_ + len); i++)
@@ -170,14 +203,14 @@ bool UnixTCPGDBConnection::_available(bool block)
         }
         else if (len == 0)
         { // eof
-            close(active_);
+            CLOSESOCK(active_);
             active_valid_ = false;
         }
         else if (errno != EAGAIN && errno != EWOULDBLOCK)
         {
             std::cout << "ERROR: gdb socket failed" << std::endl;
             std::cout << "\t" << strerror(errno) << std::endl;
-            close(active_);
+            CLOSESOCK(active_);
             active_valid_ = false;
         }
     }
@@ -208,12 +241,16 @@ bool UnixTCPGDBConnection::snd(std::string answer)
         // std::cout << "\""<< answer<<  "\""<<  std::endl;
         while (pos < answer.length())
         {
-            ssize_t len = write(active_, answer.c_str() + pos, answer.length() - pos);
+#if ETISS_USE_POSIX_SOCKET
+            size_t len = write(active_, answer.c_str() + pos, answer.length() - pos);
+#else
+            size_t len = send(active_, answer.c_str() + pos, answer.length() - pos, 0);
+#endif
             if (len < 0)
             {
                 if (len != EAGAIN && len != EWOULDBLOCK)
                 {
-                    close(active_);
+                    CLOSESOCK(active_);
                     active_valid_ = false;
                     return false;
                 }
@@ -231,5 +268,3 @@ bool UnixTCPGDBConnection::snd(std::string answer)
         return false;
     }
 }
-
-#endif // ETISS_USE_POSIX_SOCKET

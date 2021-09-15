@@ -370,7 +370,6 @@ jobs:
           edit-mode: replace
           body: ${{ steps.get-comment-body.outputs.body }}
 
-
   display-wiki:
     needs: compare_mips
     runs-on: ubuntu-latest

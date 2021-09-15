@@ -1,0 +1,52 @@
+<map id="RISCV64Arch" name="RISCV64Arch">
+<area shape="rect" id="node1" title=" " alt="" coords="1135,1373,1241,1400"/>
+<area shape="rect" id="node2" href="$classetiss_1_1CPUArch.html" title="the interface to translate instructions of and processor architecture" alt="" coords="764,1360,881,1387"/>
+<area shape="rect" id="node7" href="$classetiss_1_1Plugin.html" title="base plugin class that provides access to different plugin functions if present" alt="" coords="1137,868,1239,895"/>
+<area shape="rect" id="node46" title=" " alt="" coords="1692,1401,1857,1442"/>
+<area shape="rect" id="node3" href="$classetiss_1_1CPUArchRegListenerInterface.html" title="allows to inform plugins about changes to a register that is present in the cpu structure." alt="" coords="327,1405,521,1446"/>
+<area shape="rect" id="node4" href="$classetiss_1_1CPUArchCPUManipulation.html" title="interface for cpu structure access." alt="" coords="309,1303,539,1329"/>
+<area shape="rect" id="node5" href="$classetiss_1_1CPUArchDefaultPlugins.html" title="provides common basic plugins" alt="" coords="318,1353,530,1380"/>
+<area shape="rect" id="node6" href="$classetiss_1_1TranslationPlugin.html" title="allows to add code to the translation of instructions" alt="" coords="1475,1097,1647,1124"/>
+<area shape="rect" id="node9" href="$classetiss_1_1InterruptListenerPlugin.html" title=" " alt="" coords="1477,659,1646,701"/>
+<area shape="rect" id="node15" href="$classetiss_1_1RegisterDevicePlugin.html" title="RegisterDevicePlugin::changedRegister is called if a supported register has been changed." alt="" coords="1461,993,1661,1020"/>
+<area shape="rect" id="node16" href="$classetiss_1_1CoroutinePlugin.html" title="this plugin will be called before a block is executed." alt="" coords="1479,848,1643,875"/>
+<area shape="rect" id="node33" title=" " alt="" coords="1479,725,1644,766"/>
+<area shape="rect" id="node47" href="$classetiss_1_1SystemWrapperPlugin.html" title="this plugin allows to wrap the ETISS_System interface" alt="" coords="1459,916,1664,943"/>
+<area shape="rect" id="node8" href="$classetiss_1_1ToString.html" title="Marker interface for toString() support." alt="" coords="766,793,879,820"/>
+<area shape="rect" id="node20" href="$classetiss_1_1CPUCore.html" title="CPUCore is responsible for the simulation of a CPU core in ETISS." alt="" coords="2640,683,2759,709"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1881,570,2061,611"/>
+<area shape="rect" id="node10" href="$structETISS__CPU.html" title="basic cpu state structure needed for execution of any cpu architecture." alt="" coords="777,489,869,516"/>
+<area shape="rect" id="node38" href="$classetiss_1_1mm_1_1MMU.html" title=" " alt="" coords="1497,519,1626,545"/>
+<area shape="rect" id="node11" title=" " alt="" coords="387,389,461,416"/>
+<area shape="rect" id="node12" title=" " alt="" coords="399,541,449,568"/>
+<area shape="rect" id="node40" href="$structETISS__System.html" title="memory access and time synchronization functions." alt="" coords="765,688,880,715"/>
+<area shape="rect" id="node13" title=" " alt="" coords="399,440,449,467"/>
+<area shape="rect" id="node14" title=" " alt="" coords="373,491,475,517"/>
+<area shape="rect" id="node17" title=" " alt="" coords="743,961,903,988"/>
+<area shape="rect" id="node18" title="STL class." alt="" coords="381,1157,467,1184"/>
+<area shape="rect" id="node27" href="$classetiss_1_1JIT.html" title="compiler interface for just in time compilation of generated C code" alt="" coords="784,1208,861,1235"/>
+<area shape="rect" id="node49" title=" " alt="" coords="740,1284,905,1311"/>
+<area shape="rect" id="node19" title="STL class." alt="" coords="5,1150,144,1191"/>
+<area shape="rect" id="node22" href="$classetiss_1_1CPUCore_1_1InterruptVectorWrapper.html" title=" " alt="" coords="2285,493,2467,534"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2829,637,2985,678"/>
+<area shape="rect" id="node21" href="$classetiss_1_1VirtualStructSupport.html" title=" " alt="" coords="2280,892,2472,919"/>
+<area shape="rect" id="node23" href="$classetiss_1_1InterruptVector.html" title="interface to set interrupt bits" alt="" coords="1892,357,2051,384"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1163,296,1213,323"/>
+<area shape="rect" id="node29" href="$classetiss_1_1VirtualStruct.html" title="abstract representation of an module of a simulation which could be a embedded device of the cpu of a..." alt="" coords="1900,183,2043,209"/>
+<area shape="rect" id="node31" href="$classetiss_1_1fault_1_1Injector.html" title=" " alt="" coords="1487,116,1635,143"/>
+<area shape="rect" id="node26" title=" " alt="" coords="1265,1318,1431,1359"/>
+<area shape="rect" id="node28" title=" " alt="" coords="2293,221,2459,262"/>
+<area shape="rect" id="node30" title=" " alt="" coords="1460,167,1663,209"/>
+<area shape="rect" id="node32" title=" " alt="" coords="2085,713,2256,754"/>
+<area shape="rect" id="node34" title=" " alt="" coords="2351,943,2401,969"/>
+<area shape="rect" id="node35" title=" " alt="" coords="3099,675,3287,717"/>
+<area shape="rect" id="node37" title=" " alt="" coords="2088,558,2253,599"/>
+<area shape="rect" id="node39" title=" " alt="" coords="34,600,115,627"/>
+<area shape="rect" id="node48" href="$classetiss_1_1plugin_1_1gdb_1_1GDBCore.html" title="provides to architecture dependent registers as defined by gdb" alt="" coords="357,1470,491,1511"/>
+<area shape="rect" id="node41" title=" " alt="" coords="331,592,517,677"/>
+<area shape="rect" id="node42" title=" " alt="" coords="334,702,514,773"/>
+<area shape="rect" id="node43" title=" " alt="" coords="331,797,517,867"/>
+<area shape="rect" id="node44" title="STL class." alt="" coords="2330,997,2422,1024"/>
+<area shape="rect" id="node45" title=" " alt="" coords="2357,1057,2395,1084"/>
+<area shape="rect" id="node50" href="$classRISCV64GDBCore.html" title="This class is the brige between RISCV64 architecture and gdbserver." alt="" coords="755,1468,891,1495"/>
+</map>

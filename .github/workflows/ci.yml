@@ -168,6 +168,8 @@ jobs:
         ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build/riscv_example.elf --jit.type=LLVMJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
         ./main.exe --vp.elf_file=../../../SW/riscv/build64/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv/memsegs.ini -pLogger
         ./main.exe --vp.elf_file=../../../SW/riscv_cpp/build64/riscv_example.elf --jit.type=TCCJIT --etiss.loglevel=4 -i../../../SW/riscv_cpp/memsegs.ini -pLogger
+
+
   benchmark:
     strategy:
       matrix:
@@ -198,13 +200,12 @@ jobs:
       run: |
         ./run_helper.sh ../SW/riscv_dhry/build/riscv_example ${{matrix.jit-engine}} --vp.stats_file_path=${{runner.workspace}}/results/run.json
         mv ${{runner.workspace}}/results/run.json ${{runner.workspace}}/results/run_${{matrix.jit-engine}}_${{matrix.run-no}}.json
+
     - name: Save Benchmark Results
       uses: actions/upload-artifact@v2
       with:
         name: run_${{matrix.jit-engine}}_${{matrix.run-no}}.json
         path: ${{runner.workspace}}/results/run_${{matrix.jit-engine}}_${{matrix.run-no}}.json
-
-
 
 
   compare_mips:
@@ -232,7 +233,7 @@ jobs:
       - name: get old benchmark results
         uses: actions/checkout@v2
         with:
-          ref: benchmark_results
+          ref: benchmark_result
           path: benchmark_results_old
 
       - name: creating a directory results_ for storing wiki text, issue text and the graph
@@ -254,7 +255,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./benchmark_results_old
-          publish_branch: benchmark_results
+          publish_branch: benchmark_result
           enable_jekyll: true
 
       - name: uploading benchmark_results
@@ -283,12 +284,6 @@ jobs:
           name: wiki.md
           path: results_/wiki.md
 
-      # - name: delete unnecessary artifacts
-      #   uses: geekyeggo/delete-artifact@v1
-      #   with:
-      #     name: |
-      #       stats_file.json
-
 
   display-push:
     needs: compare_mips
@@ -313,7 +308,7 @@ jobs:
         uses: peter-evans/find-comment@v1
         id: fc
         with:
-          issue-number: 19
+          issue-number: 1
 
           body-includes: This comment was created automatically, please do not change!
 
@@ -321,7 +316,7 @@ jobs:
         if: ${{ steps.fc.outputs.comment-id == 0 }}
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: 19
+          issue-number: 1
           edit-mode: replace
           body: ${{ steps.get-comment-body.outputs.body }}
 
@@ -375,11 +370,6 @@ jobs:
           edit-mode: replace
           body: ${{ steps.get-comment-body.outputs.body }}
 
-      # - name: Delete Artifacts
-      #   uses: jimschubert/delete-artifacts-action@v1
-      #   with:
-      #     min_bytes: '0'
-
 
   display-wiki:
     needs: compare_mips
@@ -425,6 +415,5 @@ jobs:
         uses: jimschubert/delete-artifacts-action@v1
         with:
           min_bytes: '0'
-
 
 
